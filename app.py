@@ -271,6 +271,28 @@ def score_bar_html(score, max_score=10):
   <span>−10 PUT</span><span>0 WAIT</span><span>CALL +10</span>
 </div>"""
 
+def get_zoomed_df(df, timeframe):
+    """
+    Returns only the recent window based on timeframe selection.
+    """
+    if df is None or df.empty:
+        return df
+
+    try:
+        if timeframe == "1m":
+            return df.tail(20)   # last ~20 minutes (good visual context)
+        elif timeframe == "3m":
+            return df.tail(20)   # ~60 mins
+        elif timeframe == "5m":
+            return df.tail(15)   # last ~75 mins but visually tight
+        elif timeframe == "15m":
+            return df.tail(10)   # last ~150 mins
+    except Exception:
+        pass
+
+    return df
+
+
 
 def candle_card_html(candle, timeframe="5m"):
     if not candle:
@@ -737,8 +759,8 @@ def main():
     with right:
 
         # Chart with current TF
-        df_chart = getattr(st.session_state, "df_active", st.session_state.df5)
-        sup  = result.get("support", [])
+        df_chart_full = getattr(st.session_state, "df_active", st.session_state.df5)
+        df_chart = get_zoomed_df(df_chart_full, st.session_state.chart_tf)        sup  = result.get("support", [])
         res  = result.get("resistance", [])
         fig = build_chart(df_chart, timeframe=st.session_state.chart_tf,
                           support=sup, resistance=res)
