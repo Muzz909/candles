@@ -760,7 +760,8 @@ def main():
 
         # Chart with current TF
         df_chart_full = getattr(st.session_state, "df_active", st.session_state.df5)
-        df_chart = get_zoomed_df(df_chart_full, st.session_state.chart_tf)        sup  = result.get("support", [])
+        df_chart = get_zoomed_df(df_chart_full, st.session_state.chart_tf)    
+        sup  = result.get("support", [])
         res  = result.get("resistance", [])
         fig = build_chart(df_chart, timeframe=st.session_state.chart_tf,
                           support=sup, resistance=res)
