@@ -382,14 +382,14 @@ def build_chart(df, timeframe="5m", support=None, resistance=None):
         x=df.index, open=df["open"], high=df["high"],
         low=df["low"], close=df["close"],
         name="NIFTY",
-        increasing=dict(fillcolor="#0d3d1e", line=dict(color="#1a9e5c", width=1.2)),
-        decreasing=dict(fillcolor="#3d0d0d", line=dict(color="#d94040", width=1.2)),
+        increasing=dict(fillcolor="#22c55e", line=dict(color="#22c55e", width=1)),
+        decreasing=dict(fillcolor="#ef4444", line=dict(color="#ef4444", width=1)),
     ), row=1, col=1)
 
     # VWAP
     if "vwap" in df.columns:
         fig.add_trace(go.Scatter(x=df.index, y=df["vwap"],
-            name="VWAP", line=dict(color="#f0a500", width=1.5, dash="dot")), row=1, col=1)
+            name="VWAP", line=dict(color="#facc15", width=2)), row=1, col=1)
 
     # EMAs
     for col, color, name in [("ema9","#60aaff","EMA9"), ("ema20","#c084fc","EMA20"), ("ema50","#f472b6","EMA50")]:
@@ -444,7 +444,7 @@ def build_chart(df, timeframe="5m", support=None, resistance=None):
             fig.add_trace(go.Scatter(x=df.index, y=df["macd_sig"],
                 name="Signal", line=dict(color="#f472b6", width=1)), row=4, col=1)
 
-    BG = "rgba(0,0,0,0)"
+    BG = "#0a0a0a"
     fig.update_layout(
         height=620,
         paper_bgcolor=BG,
@@ -458,7 +458,7 @@ def build_chart(df, timeframe="5m", support=None, resistance=None):
             font=dict(size=10),
             bgcolor="rgba(0,0,0,0)",
         ),
-        hovermode="x unified",
+        hovermode="x",
         hoverlabel=dict(bgcolor="#111", font_size=11, font_family="JetBrains Mono"),
     )
     for i in range(1, 5):
